@@ -167,11 +167,11 @@ def fertilizer_recommendation():
 @ app.route('/crop_predict', methods=['POST'])
 def crop_predict():
     if request.method == 'POST':
-        N = int(request.form.get('nitrogen')
-        P = int(request.form.get('phosphorous')
-        K = int(request.form.get('pottasium')
-        ph = float(request.form.get('ph')
-        rainfall = float(request.form.get('rainfall')
+        N = int(request.form['nitrogen')]
+        P = int(request.form[('phosphorous')]
+        K = int(request.form[('pottasium')]
+        ph = float(request.form[('ph')]
+        rainfall = float(request.form[('rainfall')]
         city = request.form.get('city')
 
         if weather_fetch(city) != None:

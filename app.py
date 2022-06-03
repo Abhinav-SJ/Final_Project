@@ -165,7 +165,7 @@ def fertilizer_recommendation():
 # render crop recommendation result page
 
 
-@ app.route('/crop-predict', methods=['POST'])
+@ app.route('/predict', methods=['GET','POST'])
 def crop_prediction():
     title = 'Harvestify - Crop Recommendation'
 

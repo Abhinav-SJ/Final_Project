@@ -1,6 +1,6 @@
 # Importing essential libraries and modules
 
-from flask import Flask, render_template, request, Markup
+from flask import Flask, render_template, request, Markup, jsonify
 import numpy as np
 import pandas as pd
 from utils.disease import disease_dic
@@ -133,8 +133,7 @@ app = Flask(__name__)
 
 @ app.route('/')
 def home():
-    title = 'Harvestify - Home'
-    return render_template('index.html', title=title)
+    return "Hello World"
 
 # render crop recommendation form page
 
@@ -165,18 +164,14 @@ def fertilizer_recommendation():
 # render crop recommendation result page
 
 
-@ app.route('/crop-predict', methods=['POST'])
-def crop_prediction():
-    title = 'Harvestify - Crop Recommendation'
-
+@ app.route('/crop_predict', methods=['POST'])
+def crop_predict():
     if request.method == 'POST':
         N = int(request.form['nitrogen'])
         P = int(request.form['phosphorous'])
         K = int(request.form['pottasium'])
         ph = float(request.form['ph'])
         rainfall = float(request.form['rainfall'])
-
-        # state = request.form.get("stt")
         city = request.form.get("city")
 
         if weather_fetch(city) != None:
@@ -185,12 +180,10 @@ def crop_prediction():
             my_prediction = crop_recommendation_model.predict(data)
             final_prediction = my_prediction[0]
 
-            return render_template('crop-result.html', prediction=final_prediction, title=title)
-
+            return jsonify({'label':str(final_prediction)})
         else:
 
-            return render_template('try_again.html', title=title)
-
+            return "No data"
 # render fertilizer recommendation result page
 
 

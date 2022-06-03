@@ -1,6 +1,6 @@
 # Importing essential libraries and modules
 
-from flask import Flask, render_template, request, Markup, jsonify
+from flask import Flask, render_template, request, Markup
 import numpy as np
 import pandas as pd
 from utils.disease import disease_dic
@@ -133,12 +133,13 @@ app = Flask(__name__)
 
 @ app.route('/')
 def home():
-    return "Hello World"
+    title = 'Harvestify - Home'
+    return render_template('index.html', title=title)
 
 # render crop recommendation form page
 
 
-@ app.route('/crop')
+@ app.route('/crop-recommend')
 def crop_recommend():
     title = 'Harvestify - Crop Recommendation'
     return render_template('crop.html', title=title)
@@ -164,28 +165,32 @@ def fertilizer_recommendation():
 # render crop recommendation result page
 
 
-@ app.route('/crop-predict')
-def crop_predict():
-    
-    N = int(request.form['nitrogen'])
-    P = int(request.form['phosphorous'])
-    K = int(request.form['pottasium'])
-    ph = float(request.form['ph'])
-    rainfall = float(request.form['rainfall'])
+@ app.route('/crop-predict', methods=['POST'])
+def crop_prediction():
+    title = 'Harvestify - Crop Recommendation'
 
-    # state = request.form.get("stt")
-    city = request.form.get("city")
+    if request.method == 'POST':
+        N = int(request.form['nitrogen'])
+        P = int(request.form['phosphorous'])
+        K = int(request.form['pottasium'])
+        ph = float(request.form['ph'])
+        rainfall = float(request.form['rainfall'])
 
-    if weather_fetch(city) != None:
-        temperature, humidity = weather_fetch(city)
-        data = np.array([[N, P, K, temperature, humidity, ph, rainfall]])
-        my_prediction = crop_recommendation_model.predict(data)
-        final_prediction = my_prediction[0]
+        # state = request.form.get("stt")
+        city = request.form.get("city")
 
-        return jsonify({'label':str(final_prediction)})
-    else:
+        if weather_fetch(city) != None:
+            temperature, humidity = weather_fetch(city)
+            data = np.array([[N, P, K, temperature, humidity, ph, rainfall]])
+            my_prediction = crop_recommendation_model.predict(data)
+            final_prediction = my_prediction[0]
 
-        return "No data"
+            return render_template('crop-result.html', prediction=final_prediction, title=title)
+
+        else:
+
+            return render_template('try_again.html', title=title)
+
 # render fertilizer recommendation result page
 
 

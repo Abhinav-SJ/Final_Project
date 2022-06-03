@@ -138,7 +138,7 @@ def home():
 # render crop recommendation form page
 
 
-@ app.route('/crop-recommend')
+@ app.route('/crop')
 def crop_recommend():
     title = 'Harvestify - Crop Recommendation'
     return render_template('crop.html', title=title)
@@ -164,7 +164,7 @@ def fertilizer_recommendation():
 # render crop recommendation result page
 
 
-@ app.route('/crop_predict', methods=['POST'])
+@ app.route('/crop-predict', methods=['POST'])
 def crop_predict():
     if request.method == 'POST':
         N = int(request.form['nitrogen'])

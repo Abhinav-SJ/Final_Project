@@ -228,9 +228,7 @@ def fert_recommend():
         else:
             key = "Klow"
 
-    response = Markup(str(fertilizer_dic[key]))
-
-    return render_template('fertilizer-result.html', recommendation=response, title=title)
+    return jsonify({'result': key})
 
 # render disease prediction result page
 

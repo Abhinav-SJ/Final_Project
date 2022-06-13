@@ -165,28 +165,29 @@ def fertilizer_recommendation():
 # render crop recommendation result page
 
 
-@ app.route('/predict', methods=['GET','POST'])
-def crop_prediction():
-    N = int(request.form['nitrogen'])
-    P = int(request.form['phosphorous'])
-    K = int(request.form['pottasium'])
-    ph = float(request.form['ph'])
-    rainfall = float(request.form['rainfall'])
+@ app.route('/predict', methods=['POST'])
+def predict():
+    if request.method == 'POST':
+      N = int(request.form.get('nitrogen'))
+      P = int(request.form.get('phosphorous'))
+      K = int(request.form.get('pottasium'))
+      ph = float(request.form.get('ph'))
+      rainfall = float(request.form.get('rainfall'))
 
-    # state = request.form.get("stt")
-    city = request.form.get("city")
+      # state = request.form.get("stt")
+      city = request.form.get("city")
 
-    if weather_fetch(city) != None:
-        temperature, humidity = weather_fetch(city)
-        data = np.array([[N, P, K, temperature, humidity, ph, rainfall]])
-        my_prediction = crop_recommendation_model.predict(data)
-        final_prediction = my_prediction[0]
+      if weather_fetch(city) != None:
+          temperature, humidity = weather_fetch(city)
+          data = np.array([[N, P, K, temperature, humidity, ph, rainfall]])
+          my_prediction = crop_recommendation_model.predict(data)
+          final_prediction = my_prediction[0]
 
-        return jsonify({'label':str(final_prediction)})
+          return jsonify({'label':final_prediction})
 
-    else:
+      else:
 
-        return "No data"
+          return "No data"
 
 # render fertilizer recommendation result page
 

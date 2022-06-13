@@ -170,7 +170,7 @@ def predict():
     if request.method == 'POST':
       N = int(request.form.get('nitrogen'))
       P = int(request.form.get('phosphorous'))
-      K = int(request.form.get('pottasium'))
+      K = int(request.form.get('potassium'))
       ph = float(request.form.get('ph'))
       rainfall = float(request.form.get('rainfall'))
 

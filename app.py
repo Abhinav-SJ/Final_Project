@@ -13,6 +13,7 @@ import torch
 from torchvision import transforms
 from PIL import Image
 from utils.model import ResNet9
+from io import BytesIO
 # ==============================================================================================
 
 # -------------------------LOADING THE TRAINED MODELS -----------------------------------------------
@@ -130,13 +131,22 @@ app = Flask(__name__)
 
 # render home page
 
-
 @ app.route('/')
 def home():
     title = 'Harvestify - Home'
     return render_template('index.html', title=title)
 
 # render crop recommendation form page
+
+@ app.route('/get-image')
+def get_image()
+{
+  file = request.files['image']
+  img = Image.open(file.stream)
+  return jsonify({'disease':'dis'}
+
+}
+  
 
 
 @ app.route('/crop-recommend')

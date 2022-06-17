@@ -137,11 +137,12 @@ def home():
 
 # render crop recommendation form page
 
-@ app.route('/get-image')
+@ app.route('/get-image', methods=['POST'])
 def get_image():
-    file = request.files['image']
-    img = Image.open(file.stream)
-    return jsonify({'disease':'dis'})
+    if request.method == 'POST':
+      file = request.files['image']
+      img = Image.open(file.stream)
+      return jsonify({'disease':'dis'})
   
 
 @ app.route('/crop-recommend')

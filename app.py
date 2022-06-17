@@ -13,7 +13,6 @@ import torch
 from torchvision import transforms
 from PIL import Image
 from utils.model import ResNet9
-from io import BytesIO
 # ==============================================================================================
 
 # -------------------------LOADING THE TRAINED MODELS -----------------------------------------------
@@ -139,15 +138,13 @@ def home():
 # render crop recommendation form page
 
 @ app.route('/get-image')
-def get_image()
+def get_image():
 {
   file = request.files['image']
   img = Image.open(file.stream)
   return jsonify({'disease':'dis'}
-
 }
   
-
 
 @ app.route('/crop-recommend')
 def crop_recommend():

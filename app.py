@@ -139,11 +139,9 @@ def home():
 
 @ app.route('/get-image')
 def get_image():
-{
-  file = request.files['image']
-  img = Image.open(file.stream)
-  return jsonify({'disease':'dis'}
-}
+    file = request.files['image']
+    img = Image.open(file.stream)
+    return jsonify({'disease':'dis'})
   
 
 @ app.route('/crop-recommend')
